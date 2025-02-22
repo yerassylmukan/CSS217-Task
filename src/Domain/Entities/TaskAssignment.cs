@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities;
+﻿using Task = Domain.Entities.Task;
+
+namespace Domain.Entities;
 
 public class TaskAssignment
 {
