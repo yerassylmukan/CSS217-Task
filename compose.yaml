@@ -1,4 +1,24 @@
 ﻿services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password1234
+      - POSTGRES_DB=appdb
+    restart: always
+    ports:
+      - "5432:5432"
+  
+  identity:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password1234
+      - POSTGRES_DB=identitydb
+    restart: always
+    ports:
+      - "5433:5432"
+  
   webapi:
     image: webapi
     build:
@@ -9,3 +29,6 @@
       - ASPNETCORE_URLS=http://+:80
     ports:
       - "5000:80"
+    depends_on:
+      - db
+      - identity
