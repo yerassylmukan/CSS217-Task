@@ -9,7 +9,7 @@ public class BoardConfiguration : IEntityTypeConfiguration<Board>
     public void Configure(EntityTypeBuilder<Board> modelBuilder)
     {
         modelBuilder.HasKey(b => b.Id);
-        
+
         modelBuilder
             .HasMany(b => b.Columns)
             .WithOne(c => c.Board)

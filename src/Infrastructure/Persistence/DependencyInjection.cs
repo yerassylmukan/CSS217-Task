@@ -7,11 +7,9 @@ namespace Persistence;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddPersistence(this IServiceCollection service, IConfiguration configuration)
+    public static void AddPersistenceServiceCollection(this IServiceCollection service, IConfiguration configuration)
     {
         service.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-        
-        return service;
     }
 }

@@ -4,5 +4,4 @@ namespace Identity.Data;
 
 public class ApplicationUser : IdentityUser
 {
-    
 }

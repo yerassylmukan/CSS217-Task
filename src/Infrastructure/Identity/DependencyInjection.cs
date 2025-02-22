@@ -3,7 +3,6 @@ using Application.Constants;
 using Identity.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,15 +12,15 @@ namespace Identity;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
+    public static void AddIdentityServiceCollection(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<AppIdentityDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("IdentityConnection")));
-        
+
         services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<AppIdentityDbContext>()
             .AddDefaultTokenProviders();
-        
+
         var key = Encoding.ASCII.GetBytes(JWTKey.KEY);
         services.AddAuthentication(config =>
             {
@@ -41,7 +40,5 @@ public static class DependencyInjection
                     ValidateAudience = false
                 };
             });
-
-        return services;
     }
 }

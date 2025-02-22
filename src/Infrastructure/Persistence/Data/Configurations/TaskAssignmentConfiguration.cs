@@ -9,9 +9,8 @@ public class TaskAssignmentConfiguration : IEntityTypeConfiguration<TaskAssignme
     public void Configure(EntityTypeBuilder<TaskAssignment> modelBuilder)
     {
         modelBuilder.HasKey(ta => new { ta.TaskId, ta.UserId });
-        
-        modelBuilder.
-            HasOne(ta => ta.Task)
+
+        modelBuilder.HasOne(ta => ta.Task)
             .WithMany(t => t.Assignments)
             .HasForeignKey(ta => ta.TaskId);
 

@@ -9,7 +9,7 @@ public class ColumnConfiguration : IEntityTypeConfiguration<Column>
     public void Configure(EntityTypeBuilder<Column> modelBuilder)
     {
         modelBuilder.HasKey(c => c.Id);
-        
+
         modelBuilder
             .HasMany(c => c.Tasks)
             .WithOne(t => t.Column)
