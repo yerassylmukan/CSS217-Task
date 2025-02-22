@@ -10,6 +10,8 @@ public class ColumnConfiguration : IEntityTypeConfiguration<Column>
     {
         modelBuilder.HasKey(c => c.Id);
 
+        modelBuilder.Property(c => c.Id).ValueGeneratedOnAdd();
+
         modelBuilder
             .HasMany(c => c.Tasks)
             .WithOne(t => t.Column)

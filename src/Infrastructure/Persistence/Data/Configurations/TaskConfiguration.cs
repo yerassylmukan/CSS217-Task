@@ -10,6 +10,8 @@ public class TaskConfiguration : IEntityTypeConfiguration<Task>
     {
         modelBuilder.HasKey(t => t.Id);
 
+        modelBuilder.Property(t => t.Id).ValueGeneratedOnAdd();
+
         modelBuilder.Property(t => t.Title).IsRequired();
     }
 }

@@ -10,6 +10,8 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
     {
         modelBuilder.HasKey(c => c.Id);
 
+        modelBuilder.Property(c => c.Id).ValueGeneratedOnAdd();
+
         modelBuilder
             .HasOne(c => c.Task)
             .WithMany(t => t.Comments)

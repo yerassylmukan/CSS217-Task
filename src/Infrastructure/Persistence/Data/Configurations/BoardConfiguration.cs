@@ -10,6 +10,8 @@ public class BoardConfiguration : IEntityTypeConfiguration<Board>
     {
         modelBuilder.HasKey(b => b.Id);
 
+        modelBuilder.Property(b => b.Id).ValueGeneratedOnAdd();
+
         modelBuilder
             .HasMany(b => b.Columns)
             .WithOne(c => c.Board)
