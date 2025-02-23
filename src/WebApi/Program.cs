@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using Persistence;
 using Persistence.Data;
 using WebApi.Extensions;
+using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,6 +78,8 @@ catch (Exception e)
 {
     app.Logger.LogError(e, "An error occurred while seeding the database.");
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseRouting();
 app.UseAuthentication();
