@@ -42,7 +42,9 @@ public static class DependencyInjection
                     ValidateAudience = false
                 };
             });
-        
+
         services.AddScoped<ITokenClaimsService, TokenClaimsService>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IProfileService, ProfileService>();
     }
 }

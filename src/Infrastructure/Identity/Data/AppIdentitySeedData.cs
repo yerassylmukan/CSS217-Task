@@ -5,14 +5,15 @@ namespace Identity.Data;
 
 public static class AppIdentitySeedData
 {
-    public static async Task SeedData(AppIdentityDbContext dbContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public static async Task SeedData(AppIdentityDbContext dbContext, UserManager<ApplicationUser> userManager,
+        RoleManager<IdentityRole> roleManager)
     {
         if (dbContext.Database.IsNpgsql()) dbContext.Database.Migrate();
 
         await EnsureRoleExistsAsync(roleManager, "Admin");
         await EnsureRoleExistsAsync(roleManager, "User");
 
-        var adminUserName = "admin@gmail.com";
+        var adminUserName = "admin";
         var adminUser = new ApplicationUser
         {
             UserName = adminUserName,
@@ -25,7 +26,7 @@ public static class AppIdentitySeedData
             await userManager.AddToRoleAsync(adminUser, "Admin");
         }
 
-        var user1UserName = "user1@gmail.com";
+        var user1UserName = "user1";
         var user1 = new ApplicationUser
         {
             UserName = user1UserName,
@@ -38,7 +39,7 @@ public static class AppIdentitySeedData
             await userManager.AddToRoleAsync(user1, "User");
         }
 
-        var user2UserName = "user2@gmail.com";
+        var user2UserName = "user2";
         var user2 = new ApplicationUser
         {
             UserName = user2UserName,

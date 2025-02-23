@@ -54,7 +54,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
 builder.Services.AddLogging();
 
 var app = builder.Build();
@@ -80,6 +79,9 @@ catch (Exception e)
 }
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseRouting();
 app.UseAuthentication();
