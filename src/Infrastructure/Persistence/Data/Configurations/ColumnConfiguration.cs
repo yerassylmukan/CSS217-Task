@@ -15,6 +15,7 @@ public class ColumnConfiguration : IEntityTypeConfiguration<Column>
         modelBuilder
             .HasMany(c => c.Tasks)
             .WithOne(t => t.Column)
-            .HasForeignKey(t => t.ColumnId);
+            .HasForeignKey(t => t.ColumnId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

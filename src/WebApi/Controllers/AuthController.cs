@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 
@@ -76,7 +75,7 @@ public class AuthController : ControllerBase
             return Unauthorized("You can only change your own account username");
 
         var token = await _authService.ChangeUsernameAsync(username, newUsername);
-        
+
         return Ok(token);
     }
 

@@ -10,10 +10,8 @@ public class TaskAssignmentConfiguration : IEntityTypeConfiguration<TaskAssignme
     {
         modelBuilder.HasKey(ta => new { ta.TaskId, ta.UserId });
 
-        modelBuilder.HasOne(ta => ta.Task)
-            .WithMany(t => t.Assignments)
-            .HasForeignKey(ta => ta.TaskId);
-
+        modelBuilder.Property(ta => ta.TaskId).IsRequired();
+        
         modelBuilder.Property(ta => ta.UserId).IsRequired();
     }
 }

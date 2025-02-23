@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Domain.DTOs;
+using Domain.Entities;
 using Domain.Exceptions;
 using Identity.Data;
 using Microsoft.AspNetCore.Identity;
@@ -51,5 +52,28 @@ public class ProfileService : IProfileService
         };
 
         return userDto;
+    }
+
+    public async Task<ApplicationUserDTO> GetProfileByUserIdAsync(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId) ?? throw new UserNotFoundException();
+
+        var roles = await _userManager.GetRolesAsync(user);
+
+        var userDto = new ApplicationUserDTO
+        {
+            UserId = user.Id,
+            Username = user.UserName!,
+            Roles = roles
+        };
+
+        return userDto;
+    }
+
+    public async Task<bool> CheckProfileByUserIdAsync(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        return user == null;
     }
 }
