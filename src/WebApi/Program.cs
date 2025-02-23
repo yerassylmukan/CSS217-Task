@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Application;
 using Identity;
 using Identity.Data;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddApplicationServiceCollection();
 builder.Services.AddPersistenceServiceCollection(builder.Configuration);
 builder.Services.AddIdentityServiceCollection(builder.Configuration);
 

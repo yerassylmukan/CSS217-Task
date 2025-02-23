@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using Application.Constants;
+using Application.Interfaces;
 using Identity.Data;
+using Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -40,5 +42,7 @@ public static class DependencyInjection
                     ValidateAudience = false
                 };
             });
+        
+        services.AddScoped<ITokenClaimsService, TokenClaimsService>();
     }
 }
