@@ -25,19 +25,16 @@ public class BoardService : IBoardService
     public async Task<IEnumerable<Board>> GetAllAsync()
     {
         var boards = await _boardRepository.GetAllAsync();
-        
+
         return boards;
     }
 
     public async Task AddAsync(string name, string ownerId)
     {
         var checkProfile = await _profileService.CheckProfileByUserIdAsync(ownerId);
-        
-        if (checkProfile)
-        {
-            throw new ArgumentException("Profile not found");
-        }
-        
+
+        if (checkProfile) throw new ArgumentException("Profile not found");
+
         var board = new Board
         {
             Name = name,
@@ -50,13 +47,10 @@ public class BoardService : IBoardService
     public async Task UpdateAsync(int id, string name, string ownerId)
     {
         var board = await _boardRepository.GetByIdAsync(id) ?? throw new ArgumentException("Board not found");
-        
+
         var checkProfile = await _profileService.CheckProfileByUserIdAsync(ownerId);
-        
-        if (checkProfile)
-        {
-            throw new ArgumentException("Profile not found");
-        }
+
+        if (checkProfile) throw new ArgumentException("Profile not found");
 
         board.Name = name;
 

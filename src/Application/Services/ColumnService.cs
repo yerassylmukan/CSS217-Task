@@ -6,8 +6,8 @@ namespace Application.Services;
 
 public class ColumnService : IColumnService
 {
-    private readonly IColumnRepository _columnRepository;
     private readonly IBoardRepository _boardRepository;
+    private readonly IColumnRepository _columnRepository;
 
     public ColumnService(IColumnRepository columnRepository, IBoardRepository boardRepository)
     {
@@ -25,14 +25,14 @@ public class ColumnService : IColumnService
     public async Task<IEnumerable<Column>> GetAllAsync()
     {
         var columns = await _columnRepository.GetAllAsync();
-        
+
         return columns;
     }
 
     public async Task AddAsync(string name, int boardId)
     {
         var board = await _boardRepository.GetByIdAsync(boardId) ?? throw new ArgumentException("Board not found");
-        
+
         var column = new Column
         {
             Name = name,
@@ -47,7 +47,7 @@ public class ColumnService : IColumnService
         var column = await _columnRepository.GetByIdAsync(id) ?? throw new ArgumentException("Column not found");
 
         var board = await _boardRepository.GetByIdAsync(boardId) ?? throw new ArgumentException("Board not found");
-        
+
         column.Name = name;
 
         await _columnRepository.UpdateAsync(column);

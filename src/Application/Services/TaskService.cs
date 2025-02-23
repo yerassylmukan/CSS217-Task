@@ -5,8 +5,8 @@ namespace Application.Services;
 
 public class TaskService : ITaskService
 {
-    private readonly ITaskRepository _taskRepository;
     private readonly IColumnRepository _columnRepository;
+    private readonly ITaskRepository _taskRepository;
 
     public TaskService(ITaskRepository taskRepository, IColumnRepository columnRepository)
     {
@@ -31,7 +31,7 @@ public class TaskService : ITaskService
     public async Task AddAsync(string title, string description, int columnId)
     {
         var column = await _columnRepository.GetByIdAsync(columnId) ?? throw new Exception("Column not found");
-        
+
         var task = new TaskEntity
         {
             Title = title,
@@ -45,7 +45,7 @@ public class TaskService : ITaskService
     public async Task UpdateAsync(int id, string title, string description, int columnId)
     {
         var task = await _taskRepository.GetByIdAsync(id) ?? throw new Exception("Task not found");
-        
+
         var column = await _columnRepository.GetByIdAsync(columnId) ?? throw new Exception("Column not found");
 
         task.Title = title;

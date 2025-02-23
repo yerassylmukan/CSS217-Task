@@ -5,7 +5,6 @@ namespace Application.Interfaces;
 
 public interface ITaskAssignmentService
 {
-    
     Task<TaskAssignment> GetByTaskIdAsync(int taskId);
     Task<TaskAssignment> GetByUserIdAsync(string userId);
     Task<IEnumerable<TaskAssignment>> GetAllAsync();

@@ -7,10 +7,11 @@ namespace Application.Services;
 public class CommentService : ICommentService
 {
     private readonly ICommentRepository _commentRepository;
-    private readonly ITaskRepository _taskRepository;
     private readonly IProfileService _profileService;
+    private readonly ITaskRepository _taskRepository;
 
-    public CommentService(ICommentRepository commentRepository, ITaskRepository taskRepository, IProfileService profileService)
+    public CommentService(ICommentRepository commentRepository, ITaskRepository taskRepository,
+        IProfileService profileService)
     {
         _commentRepository = commentRepository;
         _taskRepository = taskRepository;
@@ -35,13 +36,10 @@ public class CommentService : ICommentService
     {
         var checkProfile = await _profileService.CheckProfileByUserIdAsync(userId);
 
-        if (checkProfile)
-        {
-            throw new ArgumentException("Profile not found");
-        }
-        
+        if (checkProfile) throw new ArgumentException("Profile not found");
+
         var task = await _taskRepository.GetByIdAsync(taskId) ?? throw new ArgumentException("Task not found");
-        
+
         var comment = new Comment
         {
             Content = content,
@@ -55,14 +53,11 @@ public class CommentService : ICommentService
     public async Task UpdateAsync(int id, string content, string userId, int taskId)
     {
         var comment = await _commentRepository.GetByIdAsync(id) ?? throw new ArgumentException("Comment not found");
-        
+
         var checkProfile = await _profileService.CheckProfileByUserIdAsync(userId);
 
-        if (checkProfile)
-        {
-            throw new ArgumentException("Profile not found");
-        }
-        
+        if (checkProfile) throw new ArgumentException("Profile not found");
+
         var task = await _taskRepository.GetByIdAsync(taskId) ?? throw new ArgumentException("Task not found");
 
         comment.Content = content;

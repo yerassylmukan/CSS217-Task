@@ -1,6 +1,5 @@
 ﻿using Application.Interfaces;
 using Domain.DTOs;
-using Domain.Entities;
 using Domain.Exceptions;
 using Identity.Data;
 using Microsoft.AspNetCore.Identity;

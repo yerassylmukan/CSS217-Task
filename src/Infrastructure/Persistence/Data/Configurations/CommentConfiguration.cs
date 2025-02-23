@@ -13,9 +13,9 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
         modelBuilder.Property(c => c.Id).ValueGeneratedOnAdd();
 
         modelBuilder.Property(c => c.Content).IsRequired();
-        
+
         modelBuilder.Property(c => c.UserId).IsRequired();
-        
+
         modelBuilder.Property(c => c.TaskId).IsRequired();
     }
 }
