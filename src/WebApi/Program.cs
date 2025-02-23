@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Application;
 using Identity;
 using Identity.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence;
@@ -67,8 +68,10 @@ try
 {
     var appDbContext = services.GetRequiredService<ApplicationDbContext>();
     var appIdentityDbContext = services.GetRequiredService<AppIdentityDbContext>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     appDbContext.Database.Migrate();
-    appIdentityDbContext.Database.Migrate();
+    await AppIdentitySeedData.SeedData(appIdentityDbContext, userManager, roleManager);
 }
 catch (Exception e)
 {
