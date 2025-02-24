@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("api/[controller]/[action]")]
 public class ProfileController : ControllerBase
@@ -20,7 +19,7 @@ public class ProfileController : ControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<IEnumerable<ApplicationUserDTO>>> GetUsers(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<ApplicationUserDto>>> GetUsers(CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -30,7 +29,7 @@ public class ProfileController : ControllerBase
     }
 
     [HttpGet("{username}")]
-    public async Task<ActionResult<ApplicationUserDTO>> GetProfileByUsername([Required] string username,
+    public async Task<ActionResult<ApplicationUserDto>> GetProfileByUsername([Required] string username,
         CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)

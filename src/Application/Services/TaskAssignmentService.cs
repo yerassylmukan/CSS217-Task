@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces;
+using Application.Mappers;
+using Domain.DTOs;
 using Domain.Entities;
 using Task = System.Threading.Tasks.Task;
 
@@ -18,17 +20,17 @@ public class TaskAssignmentService : ITaskAssignmentService
         _profileService = profileService;
     }
 
-    public async Task<TaskAssignment> GetByTaskIdAsync(int taskId)
+    public async Task<TaskAssignmentDto> GetByTaskIdAsync(int taskId)
     {
         var task = await _taskRepository.GetByIdAsync(taskId) ?? throw new ArgumentException("Task not found");
 
         var taskAssignment = await _assignmentRepository.GetByTaskIdAsync(taskId) ??
                              throw new ArgumentException("Task assignment not found");
 
-        return taskAssignment;
+        return taskAssignment.MapToDto();
     }
 
-    public async Task<TaskAssignment> GetByUserIdAsync(string userId)
+    public async Task<TaskAssignmentDto> GetByUserIdAsync(string userId)
     {
         var checkProfile = await _profileService.CheckProfileByUserIdAsync(userId);
 
@@ -37,12 +39,16 @@ public class TaskAssignmentService : ITaskAssignmentService
         var taskAssignment = await _assignmentRepository.GetByUserIdAsync(userId) ??
                              throw new ArgumentException("Task assignment not found");
 
-        return taskAssignment;
+        return taskAssignment.MapToDto();
     }
 
-    public async Task<IEnumerable<TaskAssignment>> GetAllAsync()
+    public async Task<IEnumerable<TaskAssignmentDto>> GetAllAsync()
     {
-        return await _assignmentRepository.GetAllAsync();
+        var taskAssignments = await _assignmentRepository.GetAllAsync();
+
+        var taskAssignmentsDto = taskAssignments.Select(taskAssignment => taskAssignment.MapToDto());
+
+        return taskAssignmentsDto;
     }
 
     public async Task AssignTaskAsync(int taskId, string userId)

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Application.Interfaces;
-using Domain.Entities;
+using Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
@@ -8,7 +8,6 @@ using WebApi.Models;
 namespace WebApi.Controllers;
 
 [ApiController]
-[Authorize]
 [Route("api/[controller]/[action]")]
 public class ColumnController : ControllerBase
 {
@@ -20,7 +19,7 @@ public class ColumnController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Column>> GetByColumnId([Required] int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<ColumnDto>> GetByColumnId([Required] int id, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -32,7 +31,7 @@ public class ColumnController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Column>>> GetAllColum(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<BoardDto>>> GetAllColum(CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 

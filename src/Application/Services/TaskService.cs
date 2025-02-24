@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces;
+using Application.Mappers;
+using Domain.DTOs;
 using TaskEntity = Domain.Entities.Task;
 
 namespace Application.Services;
@@ -14,18 +16,20 @@ public class TaskService : ITaskService
         _columnRepository = columnRepository;
     }
 
-    public async Task<TaskEntity> GetByIdAsync(int id)
+    public async Task<TaskDto> GetByIdAsync(int id)
     {
         var task = await _taskRepository.GetByIdAsync(id) ?? throw new Exception("Task not found");
 
-        return task;
+        return task.MapToDto();
     }
 
-    public async Task<IEnumerable<TaskEntity>> GetAllAsync()
+    public async Task<IEnumerable<TaskDto>> GetAllAsync()
     {
         var tasks = await _taskRepository.GetAllAsync();
 
-        return tasks;
+        var tasksDto = tasks.Select(task => task.MapToDto());
+
+        return tasksDto;
     }
 
     public async Task AddAsync(string title, string description, int columnId)

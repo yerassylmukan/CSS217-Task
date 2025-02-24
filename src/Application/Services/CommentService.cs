@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces;
+using Application.Mappers;
+using Domain.DTOs;
 using Domain.Entities;
 using Task = System.Threading.Tasks.Task;
 
@@ -18,18 +20,20 @@ public class CommentService : ICommentService
         _profileService = profileService;
     }
 
-    public async Task<Comment> GetByIdAsync(int id)
+    public async Task<CommentDto> GetByIdAsync(int id)
     {
         var comment = await _commentRepository.GetByIdAsync(id) ?? throw new ArgumentException("Comment not found");
 
-        return comment;
+        return comment.MapToDto();
     }
 
-    public async Task<IEnumerable<Comment>> GetAllAsync()
+    public async Task<IEnumerable<CommentDto>> GetAllAsync()
     {
         var comments = await _commentRepository.GetAllAsync();
 
-        return comments;
+        var commentsDto = comments.Select(comment => comment.MapToDto());
+
+        return commentsDto;
     }
 
     public async Task AddAsync(string content, string userId, int taskId)

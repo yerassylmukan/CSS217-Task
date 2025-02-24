@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Application.Interfaces;
+using Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
-using TaskEntity = Domain.Entities.Task;
 
 namespace WebApi.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("api/[controller]/[action]")]
 public class TaskController : ControllerBase
@@ -20,7 +19,7 @@ public class TaskController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<TaskEntity>> GetByTaskId([Required] int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<TaskDto>> GetByTaskId([Required] int id, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -32,7 +31,7 @@ public class TaskController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TaskEntity>>> GetAllTask(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<TaskDto>>> GetAllTask(CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 

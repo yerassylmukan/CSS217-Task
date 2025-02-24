@@ -17,12 +17,17 @@ public class TaskRepository : ITaskRepository
 
     public async Task<TaskEntity> GetByIdAsync(int id)
     {
-        return (await _dbContext.Tasks.FirstOrDefaultAsync(t => t.Id == id))!;
+        return (await _dbContext.Tasks
+            .Include(t => t.Assignments)
+            .Include(t => t.Comments)
+            .FirstOrDefaultAsync(t => t.Id == id))!;
     }
 
     public async Task<IEnumerable<TaskEntity>> GetAllAsync()
     {
-        return await _dbContext.Tasks.ToListAsync();
+        return await _dbContext.Tasks
+            .Include(t => t.Assignments)
+            .Include(t => t.Comments).ToListAsync();
     }
 
     public async Task AddAsync(TaskEntity entity)

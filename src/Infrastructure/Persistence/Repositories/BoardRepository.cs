@@ -17,12 +17,26 @@ public class BoardRepository : IBoardRepository
 
     public async Task<Board> GetByIdAsync(int id)
     {
-        return (await _dbContext.Boards.FirstOrDefaultAsync(b => b.Id == id))!;
+        return (await _dbContext.Boards
+            .Include(b => b.Columns)
+            .ThenInclude(c => c.Tasks)
+            .ThenInclude(t => t.Assignments)
+            .Include(b => b.Columns)
+            .ThenInclude(c => c.Tasks)
+            .ThenInclude(t => t.Comments)
+            .FirstOrDefaultAsync(b => b.Id == id))!;
     }
 
     public async Task<IEnumerable<Board>> GetAllAsync()
     {
-        return await _dbContext.Boards.ToListAsync();
+        return await _dbContext.Boards
+            .Include(b => b.Columns)
+            .ThenInclude(c => c.Tasks)
+            .ThenInclude(t => t.Assignments)
+            .Include(b => b.Columns)
+            .ThenInclude(c => c.Tasks)
+            .ThenInclude(t => t.Comments)
+            .ToListAsync();
     }
 
     public async Task AddAsync(Board entity)

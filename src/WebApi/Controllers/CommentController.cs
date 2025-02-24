@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Application.Interfaces;
-using Domain.Entities;
+using Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 
 namespace WebApi.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("api/[controller]/[action]")]
 public class CommentController : ControllerBase
@@ -20,7 +19,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Comment>> GetByCommentId([Required] int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<CommentDto>> GetByCommentId([Required] int id, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -32,7 +31,7 @@ public class CommentController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Comment>>> GetAllComment(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<CommentDto>>> GetAllComment(CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 

@@ -17,12 +17,22 @@ public class ColumnRepository : IColumnRepository
 
     public async Task<Column> GetByIdAsync(int id)
     {
-        return (await _dbContext.Columns.FirstOrDefaultAsync(c => c.Id == id))!;
+        return (await _dbContext.Columns
+            .Include(c => c.Tasks)
+            .ThenInclude(t => t.Assignments)
+            .Include(c => c.Tasks)
+            .ThenInclude(t => t.Comments)
+            .FirstOrDefaultAsync(c => c.Id == id))!;
     }
 
     public async Task<IEnumerable<Column>> GetAllAsync()
     {
-        return await _dbContext.Columns.ToListAsync();
+        return await _dbContext.Columns
+            .Include(c => c.Tasks)
+            .ThenInclude(t => t.Assignments)
+            .Include(c => c.Tasks)
+            .ThenInclude(t => t.Comments)
+            .ToListAsync();
     }
 
     public async Task AddAsync(Column entity)

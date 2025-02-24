@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces;
+using Application.Mappers;
+using Domain.DTOs;
 using Domain.Entities;
 using Task = System.Threading.Tasks.Task;
 
@@ -15,18 +17,20 @@ public class ColumnService : IColumnService
         _boardRepository = boardRepository;
     }
 
-    public async Task<Column> GetByIdAsync(int id)
+    public async Task<ColumnDto> GetByIdAsync(int id)
     {
         var column = await _columnRepository.GetByIdAsync(id) ?? throw new ArgumentException("Column not found");
 
-        return column;
+        return column.MapToDto();
     }
 
-    public async Task<IEnumerable<Column>> GetAllAsync()
+    public async Task<IEnumerable<ColumnDto>> GetAllAsync()
     {
         var columns = await _columnRepository.GetAllAsync();
 
-        return columns;
+        var columnsDto = columns.Select(column => column.MapToDto()).ToList();
+
+        return columnsDto;
     }
 
     public async Task AddAsync(string name, int boardId)

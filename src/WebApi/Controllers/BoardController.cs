@@ -1,14 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Application.Interfaces;
-using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
+using Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 
 namespace WebApi.Controllers;
 
 [ApiController]
-[Authorize]
 [Route("api/[controller]/[action]")]
 public class BoardController : ControllerBase
 {
@@ -20,7 +18,7 @@ public class BoardController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Board>> GetByBoardId([Required] int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<BoardDto>> GetByBoardId([Required] int id, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -32,7 +30,7 @@ public class BoardController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Board>>> GetAllBoard(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<BoardDto>>> GetAllBoard(CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 

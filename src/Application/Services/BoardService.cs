@@ -1,4 +1,6 @@
 ﻿using Application.Interfaces;
+using Application.Mappers;
+using Domain.DTOs;
 using Domain.Entities;
 using Task = System.Threading.Tasks.Task;
 
@@ -15,18 +17,20 @@ public class BoardService : IBoardService
         _profileService = profileService;
     }
 
-    public async Task<Board> GetByIdAsync(int id)
+    public async Task<BoardDto> GetByIdAsync(int id)
     {
         var board = await _boardRepository.GetByIdAsync(id) ?? throw new ArgumentException("Board not found");
 
-        return board;
+        return board.MapToDto();
     }
 
-    public async Task<IEnumerable<Board>> GetAllAsync()
+    public async Task<IEnumerable<BoardDto>> GetAllAsync()
     {
         var boards = await _boardRepository.GetAllAsync();
 
-        return boards;
+        var boardsDto = boards.Select(board => board.MapToDto()).ToList();
+
+        return boardsDto;
     }
 
     public async Task AddAsync(string name, string ownerId)

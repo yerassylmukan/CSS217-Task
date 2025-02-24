@@ -1,10 +1,10 @@
-using System.Text.Json.Serialization;
 using Application;
 using Identity;
 using Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Persistence;
 using Persistence.Data;
 using WebApi.Extensions;
@@ -17,8 +17,8 @@ builder.Services.AddPersistenceServiceCollection(builder.Configuration);
 builder.Services.AddIdentityServiceCollection(builder.Configuration);
 
 builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+    .AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

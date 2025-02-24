@@ -1,6 +1,6 @@
 ﻿namespace Domain.DTOs;
 
-public class ApplicationUserDTO
+public class ApplicationUserDto
 {
     public string UserId { get; set; }
     public string Username { get; set; }

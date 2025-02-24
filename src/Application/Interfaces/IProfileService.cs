@@ -4,8 +4,8 @@ namespace Application.Interfaces;
 
 public interface IProfileService
 {
-    Task<IEnumerable<ApplicationUserDTO>> GetUsersAsync();
-    Task<ApplicationUserDTO> GetProfileByUsernameAsync(string username);
-    Task<ApplicationUserDTO> GetProfileByUserIdAsync(string userId);
+    Task<IEnumerable<ApplicationUserDto>> GetUsersAsync();
+    Task<ApplicationUserDto> GetProfileByUsernameAsync(string username);
+    Task<ApplicationUserDto> GetProfileByUserIdAsync(string userId);
     Task<bool> CheckProfileByUserIdAsync(string userId);
 }

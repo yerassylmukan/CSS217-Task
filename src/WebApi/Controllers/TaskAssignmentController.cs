@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Application.Interfaces;
-using Domain.Entities;
+using Domain.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 
 namespace WebApi.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("api/[controller]/[action]")]
 public class TaskAssignmentController : ControllerBase
@@ -20,7 +19,7 @@ public class TaskAssignmentController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<TaskAssignment>> GetByTaskIdAssignment([Required] int id,
+    public async Task<ActionResult<TaskAssignmentDto>> GetByTaskIdAssignment([Required] int id,
         CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
@@ -33,7 +32,7 @@ public class TaskAssignmentController : ControllerBase
     }
 
     [HttpGet("{userId}")]
-    public async Task<ActionResult<TaskAssignment>> GetByUserIdAssignment([Required] string userId,
+    public async Task<ActionResult<TaskAssignmentDto>> GetByUserIdAssignment([Required] string userId,
         CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
@@ -46,7 +45,7 @@ public class TaskAssignmentController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TaskAssignment>>> GetAllTaskAssignment(
+    public async Task<ActionResult<IEnumerable<TaskAssignmentDto>>> GetAllTaskAssignment(
         CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
