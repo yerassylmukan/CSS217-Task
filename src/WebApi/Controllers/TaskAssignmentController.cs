@@ -7,6 +7,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]/[action]")]
 public class TaskAssignmentController : ControllerBase
@@ -55,6 +56,7 @@ public class TaskAssignmentController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddTaskAssignment([FromBody] TaskAssignmentModel model,
         CancellationToken cancellationToken)
     {
@@ -67,6 +69,7 @@ public class TaskAssignmentController : ControllerBase
     }
 
     [HttpDelete("{taskId}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> RemoveTaskAssignment([Required] int taskId, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
@@ -79,6 +82,7 @@ public class TaskAssignmentController : ControllerBase
     }
 
     [HttpDelete("{userId}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> RemoveUserAssignment([Required] string userId, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)

@@ -9,6 +9,7 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]/[action]")]
+[Authorize]
 public class CommentController : ControllerBase
 {
     private readonly ICommentService _commentService;

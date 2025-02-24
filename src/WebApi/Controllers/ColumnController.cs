@@ -9,6 +9,7 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]/[action]")]
+[Authorize]
 public class ColumnController : ControllerBase
 {
     private readonly IColumnService _columnService;
@@ -40,6 +41,7 @@ public class ColumnController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddColumn([FromBody] ColumnModel model, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -51,6 +53,7 @@ public class ColumnController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateColumn([Required] int id, [FromBody] ColumnModel model,
         CancellationToken cancellationToken)
     {
@@ -64,6 +67,7 @@ public class ColumnController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteByColumnId([Required] int id, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)

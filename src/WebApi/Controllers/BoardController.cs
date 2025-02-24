@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Application.Interfaces;
 using Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 
@@ -8,6 +9,7 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]/[action]")]
+[Authorize]
 public class BoardController : ControllerBase
 {
     private readonly IBoardService _boardService;
@@ -39,6 +41,7 @@ public class BoardController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddBoard([FromBody] BoardModel model, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -50,6 +53,7 @@ public class BoardController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateBoard([Required] int id, [FromBody] BoardModel model,
         CancellationToken cancellationToken)
     {
@@ -62,6 +66,7 @@ public class BoardController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteByBoardId([Required] int id, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();

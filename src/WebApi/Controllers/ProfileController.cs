@@ -8,6 +8,7 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]/[action]")]
+[Authorize]
 public class ProfileController : ControllerBase
 {
     private readonly IProfileService _profileService;
@@ -18,7 +19,6 @@ public class ProfileController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<IEnumerable<ApplicationUserDto>>> GetUsers(CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
