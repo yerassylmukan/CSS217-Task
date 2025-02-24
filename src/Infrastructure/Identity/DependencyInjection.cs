@@ -1,6 +1,6 @@
 ﻿using System.Text;
-using Application.Constants;
 using Application.Interfaces;
+using Domain.Constants;
 using Identity.Data;
 using Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
